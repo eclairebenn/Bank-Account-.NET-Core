@@ -1,0 +1,32 @@
+@model bank_account.Models.Record
+
+<h2>Welcome @ViewBag.User.FirstName</h2>
+<h4>Current Balance : </h4>
+<div class="balance">
+    <h4>@ViewBag.User.Balance.ToString("C2")</h4>
+</div>
+
+<form asp-controller="Record" asp-action="AddRecord" method="post">
+    <label asp-for="Amount"></label>
+    <input type="number" step="0.01" asp-for="Amount"/>
+
+    <input type="hidden" asp-for="UserId" value="@ViewBag.User.UserId">
+    <input type="submit" value="Submit">
+</form>
+
+<h5>@TempData["balance"]</h5>
+
+<table class="table-striped">
+    <tr>
+        <th>Amount</th>
+        <th>Date</th>
+    </tr>
+    @foreach(Record record in @ViewBag.Records)
+    {
+        <tr>
+            <td>@record.Amount.ToString("C2")</td>
+            <td>@record.CreatedAt.ToString("MMM dd yyyy")</td>
+        </tr>        
+    }
+
+</table>
